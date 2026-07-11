@@ -1,5 +1,6 @@
 import express from 'express';
-import { getDatabase } from '../config/database.js';
+// import { getDatabase } from '../config/database.js';
+import pool from '../config/database.js';
 import { getDreamInterpretation } from '../utils/ai-openai.js'; // or '../utils/ai-gemini.js' if using Gemini
 import { validateText } from '../utils/validateText.js'
 
