@@ -3,13 +3,13 @@ import 'dotenv/config'
 
 console.log('The Node Environment is set to: ', process.env.NODE_ENV)
 
-// if (process.env.NODE_ENV === 'production') {
-//     console.log('Production mode enabled 😎')
-// }
+if (process.env.NODE_ENV === 'production') {
+    console.log('Production mode enabled 😎')
+}
 
-// if (process.env.NODE_ENV !== 'production') {
-//     console.log('We are not in production mode 👨‍💻')
-// }
+if (process.env.NODE_ENV !== 'production') {
+    console.log('We are not in production mode 👨‍💻')
+}
 
 const app = express() 
 
