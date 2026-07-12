@@ -52,11 +52,41 @@ app.use('/api/dreams', dreamsRouter);
 
 
 
+
 // Initialize database then start server
-// initDatabase().then(() => {
-  app.listen(PORT, () => {
+
+let server
+
+initDatabase().then(() => {
+  server = app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
-// }).catch(error => {
-//   console.error('Failed to initialize database:', error);
-// });
+}).catch(error => {
+  console.error('Failed to initialize database:', error);
+  // Error Exit Code 1
+  process.exit(1)
+});
+
+
+// Learning about graceful shutdown
+
+process.on('SIGTERM', gracefulShutdown)
+
+async function gracefulShutdown() {
+  console.log('SIGTERM received, shutting down gracefully!')
+  
+  // Close the server first (stop accepting new connections)
+  server.close(() => {
+    console.log('HTTP Server closed!')
+  })
+
+  // Then close database pool
+  try {
+    await pool.end()
+    console.log('Database pool closed')
+    process.exit(0)
+  } catch (err) {
+    console.error('Error closing database pool: ', error)
+    process.exit(1)
+  }
+}
