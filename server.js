@@ -51,6 +51,17 @@ app.get('/health', async (req, res) => {
 app.use('/api/dreams', dreamsRouter);
 
 
+// shutdown endpoint: delete after testing
+app.get('/shutdown', (req, res) => {
+  console.log('=== MANUAL SHUTDOWN TRIGGERED ===');
+  res.send('Shutting down...');
+  
+  setTimeout(() => {
+    process.kill(process.pid, 'SIGTERM');
+  }, 100);
+});
+
+
 
 
 // Initialize database then start server
